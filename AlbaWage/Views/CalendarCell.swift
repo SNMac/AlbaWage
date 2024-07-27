@@ -12,7 +12,7 @@ class CalendarCell: UICollectionViewCell {
     @IBOutlet weak var dayLabel: UILabel!
     
     private func configure() {
-        // TODO: 토, 일 색상 변경
+        
     }
     
     func update(day: String, color: UIColor) {

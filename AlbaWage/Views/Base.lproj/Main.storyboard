@@ -124,19 +124,55 @@
                                     <constraint firstAttribute="height" constant="30" id="1Jz-Tv-QvU"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNq-aV-rYe">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNq-aV-rYe" userLabel="Seperator">
                                 <rect key="frame" x="0.0" y="182.33333333333334" width="393" height="1"/>
                                 <color key="backgroundColor" systemColor="separatorColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="Gcd-xf-9Ef"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KtV-Cl-PTv">
-                                <rect key="frame" x="0.0" y="191" width="393" height="501"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KtV-Cl-PTv">
+                                <rect key="frame" x="0.0" y="183.33333333333337" width="394" height="500"/>
                                 <subviews>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kbq-MV-1gR">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="501"/>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="KIU-HW-c6D">
+                                        <rect key="frame" x="0.0" y="-0.33333333333337123" width="394" height="500"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="vkf-c0-bSI">
+                                            <size key="itemSize" width="49" height="61"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalendarCell" id="eEp-4R-0m2" customClass="CalendarCell" customModule="AlbaWage" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="49" height="61"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="GAw-3e-DhN">
+                                                    <rect key="frame" x="0.0" y="0.0" width="49" height="61"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ddD-kg-q9i">
+                                                            <rect key="frame" x="19.666666666666668" y="5" width="10" height="19.333333333333332"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="ddD-kg-q9i" firstAttribute="top" secondItem="GAw-3e-DhN" secondAttribute="top" constant="5" id="QaF-KE-VuF"/>
+                                                        <constraint firstItem="ddD-kg-q9i" firstAttribute="centerX" secondItem="GAw-3e-DhN" secondAttribute="centerX" id="hfR-eb-2Oz"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="49" height="61"/>
+                                                <connections>
+                                                    <outlet property="dayLabel" destination="ddD-kg-q9i" id="Vaj-50-FQR"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kbq-MV-1gR">
+                                        <rect key="frame" x="0.0" y="-0.33333333333337123" width="394" height="500"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Q2e-0n-sgf">
@@ -151,7 +187,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="KmE-Jk-um4">
                                                     <rect key="frame" x="0.0" y="0.0" width="49" height="61"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lOK-Px-ddC">
                                                             <rect key="frame" x="19.666666666666668" y="5" width="10" height="19.333333333333332"/>
@@ -172,9 +208,47 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="407-09-RRY">
+                                        <rect key="frame" x="0.0" y="-0.33333333333337123" width="394" height="500"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="uiG-Az-mHm">
+                                            <size key="itemSize" width="49" height="61"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CalendarCell" id="ak2-UM-vpM" customClass="CalendarCell" customModule="AlbaWage" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="49" height="61"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Kea-OL-xM6">
+                                                    <rect key="frame" x="0.0" y="0.0" width="49" height="61"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGF-cv-UsP">
+                                                            <rect key="frame" x="19.666666666666668" y="5" width="10" height="19.333333333333332"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="lGF-cv-UsP" firstAttribute="top" secondItem="Kea-OL-xM6" secondAttribute="top" constant="5" id="WoN-IB-9X6"/>
+                                                        <constraint firstItem="lGF-cv-UsP" firstAttribute="centerX" secondItem="Kea-OL-xM6" secondAttribute="centerX" id="xEg-Sk-xTu"/>
+                                                    </constraints>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="49" height="61"/>
+                                                <connections>
+                                                    <outlet property="dayLabel" destination="lGF-cv-UsP" id="Vqg-FW-2tn"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
                                 </subviews>
-                                <viewLayoutGuide key="contentLayoutGuide" id="uRJ-PZ-Yaa"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="3rl-im-Bj0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="500" id="PAJ-4l-Pg7"/>
+                                </constraints>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -189,8 +263,11 @@
                             <constraint firstItem="pNq-aV-rYe" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="QAM-V1-xqR"/>
                             <constraint firstItem="pNq-aV-rYe" firstAttribute="top" secondItem="x3q-kS-uU4" secondAttribute="bottom" id="QoW-vx-JQa"/>
                             <constraint firstItem="x3q-kS-uU4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="W4U-Qp-TrY"/>
+                            <constraint firstItem="KtV-Cl-PTv" firstAttribute="top" secondItem="pNq-aV-rYe" secondAttribute="bottom" id="WqV-RP-2Xc"/>
                             <constraint firstItem="1DU-qL-tGt" firstAttribute="centerY" secondItem="GGf-Al-A0n" secondAttribute="centerY" id="aF6-1B-BvX"/>
                             <constraint firstItem="bei-qX-kYK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="bJ7-4d-Mic"/>
+                            <constraint firstItem="KtV-Cl-PTv" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dvl-U2-DMk"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="KtV-Cl-PTv" secondAttribute="leading" id="g3q-bF-4zK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="x3q-kS-uU4" secondAttribute="trailing" id="pNd-Oz-Sou"/>
                             <constraint firstItem="qi3-RK-U4p" firstAttribute="centerY" secondItem="bei-qX-kYK" secondAttribute="centerY" id="xLp-ta-4TE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qi3-RK-U4p" secondAttribute="trailing" constant="15" id="yEs-pN-tyK"/>
@@ -200,10 +277,13 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionView" destination="kbq-MV-1gR" id="YZE-RB-1km"/>
+                        <outlet property="followingCalendarCollectionView" destination="407-09-RRY" id="Bq3-8z-GB4"/>
                         <outlet property="headerLabel" destination="GGf-Al-A0n" id="DL0-FU-00G"/>
                         <outlet property="nextButton" destination="JqZ-SP-PBz" id="rWd-JG-Wug"/>
+                        <outlet property="presentCalendarCollectionView" destination="kbq-MV-1gR" id="YZE-RB-1km"/>
                         <outlet property="prevButton" destination="biZ-VI-Ks5" id="O4z-Xf-blm"/>
+                        <outlet property="previousCalendarCollectionView" destination="KIU-HW-c6D" id="629-e6-xdl"/>
+                        <outlet property="scrollView" destination="KtV-Cl-PTv" id="srv-1v-oKS"/>
                         <outlet property="weekStackView" destination="x3q-kS-uU4" id="4Mf-0i-ofr"/>
                     </connections>
                 </viewController>
