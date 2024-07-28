@@ -21,46 +21,30 @@ class CalendarViewController: UIViewController {
     @IBOutlet weak var presentCalendarCollectionView: UICollectionView!
     @IBOutlet weak var followingCalendarCollectionView: UICollectionView!
     
-    private let calendar = Calendar.current
-    private var calendarDate = Date()
-    private var previousDays = [String]()
-    private var presentDays = [String]()
-    private var followingDays = [String]()
     private let calendarHeight: CGFloat = 500
+    private let calendar = Calendar.current
+    private var calendarDate: [Date] = Array(repeating: Date(), count: 3)  // [0] = previousCalendarDate, [1] = presentCalendarDate, [2] = followingCalendarDate
+    private var days: [[String]] = Array(repeating: [], count: 3)  // [0] = previousDays, [1] = presentDays, [2] = followingDays
+    
+    private var scrollDirection: Int = 0  // -1 = left, 0 = none, 1 = right
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCalendar()
+        
         configureScrollView()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-    }
-    
-    private func configureCalendar() {
-        previousCalendarCollectionView.delegate = self
-        previousCalendarCollectionView.dataSource = self
-        presentCalendarCollectionView.delegate = self
-        presentCalendarCollectionView.dataSource = self
-        followingCalendarCollectionView.delegate = self
-        followingCalendarCollectionView.dataSource = self
-        
-        today()
+        configureCalendar()
     }
     
     private func configureScrollView() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.delegate = self
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         let screenSize = screen()?.bounds
         scrollView.contentSize = CGSize(width: screenSize!.width * 3, height: calendarHeight)
         
         let width = screenSize!.width
-        let prevXPosition = self.view.frame.width * CGFloat(0)
-        previousCalendarCollectionView.frame = CGRect(x: prevXPosition, y: 0, width: width, height: calendarHeight)
+        let previousXPosition = self.view.frame.width * CGFloat(0)
+        previousCalendarCollectionView.frame = CGRect(x: previousXPosition, y: 0, width: width, height: calendarHeight)
         scrollView.contentSize.width = self.view.frame.width * 1
         
         let presentXPosition = self.view.frame.width * CGFloat(1)
@@ -74,64 +58,106 @@ class CalendarViewController: UIViewController {
         scrollView.setContentOffset(CGPoint(x: presentXPosition, y: 0), animated: false)
     }
     
+    private func configureCalendar() {
+        previousCalendarCollectionView.delegate = self
+        previousCalendarCollectionView.dataSource = self
+        presentCalendarCollectionView.delegate = self
+        presentCalendarCollectionView.dataSource = self
+        followingCalendarCollectionView.delegate = self
+        followingCalendarCollectionView.dataSource = self
+        
+        today()
+    }
+    
     private func today() {
         let components = self.calendar.dateComponents([.year, .month], from: Date())
-        self.calendarDate = self.calendar.date(from: components) ?? Date()
-        updateCalendar()
+        self.calendarDate[1] = self.calendar.date(from: components) ?? Date()
+        self.calendarDate[0] = self.calendar.date(byAdding: DateComponents(month: -1), to: self.calendarDate[1]) ?? Date()
+        self.calendarDate[2] = self.calendar.date(byAdding: DateComponents(month: 1), to: self.calendarDate[1]) ?? Date()
+        updateCalendars()
     }
     
     @IBAction func todayButtonTapped(_ sender: Any) {
         today()
     }
     
-    private func startDayOfTheWeek() -> Int {
-        return self.calendar.component(.weekday, from: self.calendarDate) - 1
+    private func startDayOfTheWeek(calendar: Date) -> Int {
+        return self.calendar.component(.weekday, from: calendar) - 1
     }
     
-    private func endDate() -> Int {
-        return self.calendar.range(of: .day, in: .month, for: self.calendarDate)?.count ?? Int()
+    private func endDate(calendar: Date) -> Int {
+        return self.calendar.range(of: .day, in: .month, for: calendar)?.count ?? Int()
+    }
+    
+    private func updateCalendars() {
+        updateDays()
     }
     
     private func updateTitle() {
-        let date = dateFormatter(date: calendarDate)
+        let date = dateFormatter(date: calendarDate[1])
         headerLabel.text = date
     }
     
     private func updateDays() {
-        self.presentDays.removeAll()
-        let startDayOfTheWeek = startDayOfTheWeek()
-        let totalDays = startDayOfTheWeek + endDate()
+        days[0].removeAll()
+        days[1].removeAll()
+        days[2].removeAll()
         
-        for day in Int()..<totalDays {
-            if day < startDayOfTheWeek {
-                self.presentDays.append("")
-                continue
+        let startDayOfTheWeek = [
+            startDayOfTheWeek(calendar: calendarDate[0]),
+            startDayOfTheWeek(calendar: calendarDate[1]),
+            startDayOfTheWeek(calendar: calendarDate[2])
+        ]
+        let totalDays = [
+            startDayOfTheWeek[0] + endDate(calendar: calendarDate[0]),
+            startDayOfTheWeek[1] + endDate(calendar: calendarDate[1]),
+            startDayOfTheWeek[2] + endDate(calendar: calendarDate[2])
+        ]
+        
+        for i in 0...2 {
+            for day in Int()..<totalDays[i] {
+                if day < startDayOfTheWeek[i] {
+                    self.days[i].append("")
+                    continue
+                }
+                self.days[i].append("\(day - startDayOfTheWeek[i] + 1)")
             }
-            self.presentDays.append("\(day - startDayOfTheWeek + 1)")
         }
         
+        previousCalendarCollectionView.reloadData()
         presentCalendarCollectionView.reloadData()
+        followingCalendarCollectionView.reloadData()
     }
     
-    private func updateCalendar() {
-        updateTitle()
-        updateDays()
-    }
-    
-    private func moveMonth(isNext: Bool) {
+    private func moveMonth(isNext: Bool, isButtonAction: Bool) {
+        print("moveMonth()")
         let addingMonth = isNext ? 1 : -1
-        self.calendarDate = self.calendar.date(byAdding: DateComponents(month: addingMonth), to: self.calendarDate) ?? Date()
-        updateCalendar()
+        self.calendarDate[0] = self.calendar.date(byAdding: DateComponents(month: addingMonth), to: self.calendarDate[0]) ?? Date()
+        self.calendarDate[1] = self.calendar.date(byAdding: DateComponents(month: addingMonth), to: self.calendarDate[1]) ?? Date()
+        self.calendarDate[2] = self.calendar.date(byAdding: DateComponents(month: addingMonth), to: self.calendarDate[2]) ?? Date()
+        
+        if isButtonAction == true {
+            let xPosition = self.view.frame.width * (isNext ? CGFloat(2) : CGFloat(0))
+            scrollView.setContentOffset(CGPoint(x: xPosition, y: 0), animated: true)
+        }
+        
+        updateTitle()
     }
     
     @IBAction func prevButtonTapped(_ sender: Any) {
-        moveMonth(isNext: false)
+        moveMonth(isNext: false, isButtonAction: true)
     }
     
     @IBAction func nextButtonTapped(_ sender: Any) {
-        moveMonth(isNext: true)
+        moveMonth(isNext: true, isButtonAction: true)
+    }
+    
+    private func centerToPresentCalendar() {
+        let xPosition = self.view.frame.width * CGFloat(1)
+        scrollView.setContentOffset(CGPoint(x: xPosition, y: 0), animated: false)
     }
 }
+
 
 extension CalendarViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -144,33 +170,88 @@ extension CalendarViewController: UICollectionViewDelegate {
     }
 }
 
+
 extension CalendarViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+
 extension CalendarViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.presentDays.count
+        if collectionView == previousCalendarCollectionView {
+            return self.days[0].count
+        } else if collectionView == presentCalendarCollectionView {
+            return self.days[1].count
+        } else {  // collectionView == followingCalendarCollectionView
+            return self.days[2].count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalendarCell", for: indexPath) as? CalendarCell else {
-            return UICollectionViewCell()
+        if collectionView == previousCalendarCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviousCalendarCell", for: indexPath) as? CalendarCell else {
+                return UICollectionViewCell()
+            }
+            cell.update(day: self.days[0][indexPath.item], index: indexPath.item)
+            return cell
+            
+        } else if collectionView == presentCalendarCollectionView {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PresentCalendarCell", for: indexPath) as? CalendarCell else {
+                return UICollectionViewCell()
+            }
+            cell.update(day: self.days[1][indexPath.item], index: indexPath.item)
+            return cell
+            
+        } else {  // collectionView == followingCalendarCollectionView
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FollowingCalendarCell", for: indexPath) as? CalendarCell else {
+                return UICollectionViewCell()
+            }
+            cell.update(day: self.days[2][indexPath.item], index: indexPath.item)
+            return cell
         }
-        
-        let dayColor: UIColor
-        switch indexPath.item % 7 {
-        case 0:
-            dayColor = .systemRed
-        case 6:
-            dayColor = .systemBlue
-        default:
-            dayColor = .label
-        }
-        cell.update(day: self.presentDays[indexPath.item], color: dayColor)
-        return cell
     }
 }
+
+extension CalendarViewController: UIScrollViewDelegate {
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        switch targetContentOffset.pointee.x {
+        case self.view.frame.width * CGFloat(0):  // left
+            print("scrollViewWillEndDragging() - left")
+            scrollDirection = -1
+        case self.view.frame.width * CGFloat(1):  // none
+            print("scrollViewWillEndDragging() - none")
+            scrollDirection = 0
+        case self.view.frame.width * CGFloat(2):  // right
+            print("scrollViewWillEndDragging() - right")
+            scrollDirection = 1
+        default:
+            break
+        }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print("scrollViewDidEndDecelerating()")
+        switch scrollDirection {
+        case -1:  // left
+            moveMonth(isNext: false, isButtonAction: false)
+            centerToPresentCalendar()
+            updateCalendars()
+        case 1:  // right
+            moveMonth(isNext: true, isButtonAction: false)
+            centerToPresentCalendar()
+            updateCalendars()
+        default:  // none
+            break
+        }
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        print("scrollViewDidEndScrollingAnimation()")
+        centerToPresentCalendar()
+        updateCalendars()
+    }
+}
+
 
 extension CalendarViewController {
     private func dateFormatter(date: Date) -> String {
@@ -186,10 +267,8 @@ extension CalendarViewController {
         let result = formatter.string(from: NSNumber(integerLiteral: price)) ?? ""
         return result
     }
-}
-
-extension CalendarViewController {
-    func screen() -> UIScreen? {
+    
+    private func screen() -> UIScreen? {  // UIScreen.main 대안
         guard let window = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
             // 방법 1) 공식문서
             return view.window?.windowScene?.screen

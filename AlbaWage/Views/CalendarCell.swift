@@ -15,8 +15,17 @@ class CalendarCell: UICollectionViewCell {
         
     }
     
-    func update(day: String, color: UIColor) {
+    func update(day: String, index: Int) {
         dayLabel.text = day
-        dayLabel.textColor = color
+        
+        // 토, 일 색깔 설정
+        switch index % 7 {
+        case 0:
+            dayLabel.textColor = .systemRed
+        case 6:
+            dayLabel.textColor = .systemBlue
+        default:
+            dayLabel.textColor = .label
+        }
     }
 }
