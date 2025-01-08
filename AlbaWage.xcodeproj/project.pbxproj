@@ -7,21 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5B79F5652C5373210058D27B /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B79F5642C5373210058D27B /* CalendarCell.swift */; };
+		5B2F864F2D2B8FA400F74C1D /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F864E2D2B8FA400F74C1D /* DayCell.swift */; };
+		5BA6A4342D2B957200AFA738 /* CalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4332D2B957200AFA738 /* CalendarDate.swift */; };
+		5BA6A4362D2B9D3E00AFA738 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */; };
+		5BA6A4382D2B9E9800AFA738 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4372D2B9E9800AFA738 /* WeekView.swift */; };
+		5BA6A43A2D2BA25100AFA738 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4392D2BA25100AFA738 /* CalendarCell.swift */; };
+		5BA6A43C2D2BA82200AFA738 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */; };
 		5BB686692C3FD44500AC9628 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686682C3FD44500AC9628 /* AppDelegate.swift */; };
 		5BB6866B2C3FD44500AC9628 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6866A2C3FD44500AC9628 /* SceneDelegate.swift */; };
-		5BB686702C3FD44500AC9628 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 5BB6866F2C3FD44500AC9628 /* Base */; };
 		5BB686722C3FD44600AC9628 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5BB686712C3FD44600AC9628 /* Assets.xcassets */; };
 		5BB686752C3FD44600AC9628 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 5BB686742C3FD44600AC9628 /* Base */; };
 		5BB686802C3FD44600AC9628 /* AlbaSalaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6867F2C3FD44600AC9628 /* AlbaSalaryTests.swift */; };
 		5BB6868A2C3FD44600AC9628 /* AlbaSalaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686892C3FD44600AC9628 /* AlbaSalaryUITests.swift */; };
 		5BB6868C2C3FD44600AC9628 /* AlbaSalaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6868B2C3FD44600AC9628 /* AlbaSalaryUITestsLaunchTests.swift */; };
-		5BB686992C46753500AC9628 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686982C46753500AC9628 /* CalendarViewController.swift */; };
-		5BB6869B2C47A07500AC9628 /* CustomBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6869A2C47A07400AC9628 /* CustomBarItem.swift */; };
-		5BB686A12C47A5AC00AC9628 /* UIBarButtonItem+CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686A02C47A5AC00AC9628 /* UIBarButtonItem+CustomView.swift */; };
-		5BB686A52C47C19C00AC9628 /* DailyWorkInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686A42C47C19C00AC9628 /* DailyWorkInfo.swift */; };
-		5BB686A92C47C52F00AC9628 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686A82C47C52F00AC9628 /* Storage.swift */; };
-		5BB686AB2C47C56400AC9628 /* DailyWorkInfoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686AA2C47C56400AC9628 /* DailyWorkInfoStorage.swift */; };
+		5BB686992C46753500AC9628 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB686982C46753500AC9628 /* ViewController.swift */; };
+		99288FD4248C4F0FF5A4DBDD /* Pods_AlbaWage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D641E455EB30E4E4D5429B /* Pods_AlbaWage.framework */; };
+		A61A532EDC5372824887AB85 /* Pods_AlbaWageTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA65DAC54C631564A9189E62 /* Pods_AlbaWageTests.framework */; };
+		B9A41B2FDEEF84AD1D445768 /* Pods_AlbaWage_AlbaWageUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78DC2F8805B9166B206AB80E /* Pods_AlbaWage_AlbaWageUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,11 +44,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5B79F5642C5373210058D27B /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		5B2F864E2D2B8FA400F74C1D /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		5BA6A4332D2B957200AFA738 /* CalendarDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDate.swift; sourceTree = "<group>"; };
+		5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		5BA6A4372D2B9E9800AFA738 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
+		5BA6A4392D2BA25100AFA738 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
+		5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5BB686652C3FD44500AC9628 /* AlbaWage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlbaWage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB686682C3FD44500AC9628 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB6866A2C3FD44500AC9628 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5BB6866F2C3FD44500AC9628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5BB686712C3FD44600AC9628 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5BB686742C3FD44600AC9628 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5BB686762C3FD44600AC9628 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -55,14 +61,17 @@
 		5BB686852C3FD44600AC9628 /* AlbaWageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlbaWageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB686892C3FD44600AC9628 /* AlbaSalaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbaSalaryUITests.swift; sourceTree = "<group>"; };
 		5BB6868B2C3FD44600AC9628 /* AlbaSalaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbaSalaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		5BB686982C46753500AC9628 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
-		5BB6869A2C47A07400AC9628 /* CustomBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomBarItem.swift; sourceTree = "<group>"; };
-		5BB686A02C47A5AC00AC9628 /* UIBarButtonItem+CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+CustomView.swift"; sourceTree = "<group>"; };
-		5BB686A42C47C19C00AC9628 /* DailyWorkInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWorkInfo.swift; sourceTree = "<group>"; };
-		5BB686A82C47C52F00AC9628 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
-		5BB686AA2C47C56400AC9628 /* DailyWorkInfoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyWorkInfoStorage.swift; sourceTree = "<group>"; };
-		5BB686AF2C47CC9900AC9628 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		5BB686982C46753500AC9628 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5BB686B02C47CC9900AC9628 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		66469D2E5FAD4503122E0262 /* Pods-AlbaWage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWage.debug.xcconfig"; path = "Target Support Files/Pods-AlbaWage/Pods-AlbaWage.debug.xcconfig"; sourceTree = "<group>"; };
+		6D6ECC216F48581F3D72EFAA /* Pods-AlbaWageTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWageTests.release.xcconfig"; path = "Target Support Files/Pods-AlbaWageTests/Pods-AlbaWageTests.release.xcconfig"; sourceTree = "<group>"; };
+		78DC2F8805B9166B206AB80E /* Pods_AlbaWage_AlbaWageUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlbaWage_AlbaWageUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9ACAA4C787C14F9E543A61C5 /* Pods-AlbaWage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWage.release.xcconfig"; path = "Target Support Files/Pods-AlbaWage/Pods-AlbaWage.release.xcconfig"; sourceTree = "<group>"; };
+		A1D641E455EB30E4E4D5429B /* Pods_AlbaWage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlbaWage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF7E62891ABCC87F9751F102 /* Pods-AlbaWageTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWageTests.debug.xcconfig"; path = "Target Support Files/Pods-AlbaWageTests/Pods-AlbaWageTests.debug.xcconfig"; sourceTree = "<group>"; };
+		BF7FBDA93FCFB8E869D2A8ED /* Pods-AlbaWage-AlbaWageUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWage-AlbaWageUITests.debug.xcconfig"; path = "Target Support Files/Pods-AlbaWage-AlbaWageUITests/Pods-AlbaWage-AlbaWageUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		C10CEC480588A396746E70BF /* Pods-AlbaWage-AlbaWageUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlbaWage-AlbaWageUITests.release.xcconfig"; path = "Target Support Files/Pods-AlbaWage-AlbaWageUITests/Pods-AlbaWage-AlbaWageUITests.release.xcconfig"; sourceTree = "<group>"; };
+		EA65DAC54C631564A9189E62 /* Pods_AlbaWageTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AlbaWageTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99288FD4248C4F0FF5A4DBDD /* Pods_AlbaWage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61A532EDC5372824887AB85 /* Pods_AlbaWageTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,12 +95,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9A41B2FDEEF84AD1D445768 /* Pods_AlbaWage_AlbaWageUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5598AE9027792838A12EC8C5 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				66469D2E5FAD4503122E0262 /* Pods-AlbaWage.debug.xcconfig */,
+				9ACAA4C787C14F9E543A61C5 /* Pods-AlbaWage.release.xcconfig */,
+				BF7FBDA93FCFB8E869D2A8ED /* Pods-AlbaWage-AlbaWageUITests.debug.xcconfig */,
+				C10CEC480588A396746E70BF /* Pods-AlbaWage-AlbaWageUITests.release.xcconfig */,
+				BF7E62891ABCC87F9751F102 /* Pods-AlbaWageTests.debug.xcconfig */,
+				6D6ECC216F48581F3D72EFAA /* Pods-AlbaWageTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		5BB6865C2C3FD44500AC9628 = {
 			isa = PBXGroup;
 			children = (
@@ -97,6 +122,8 @@
 				5BB6867E2C3FD44600AC9628 /* AlbaWageTests */,
 				5BB686882C3FD44600AC9628 /* AlbaWageUITests */,
 				5BB686662C3FD44500AC9628 /* Products */,
+				5598AE9027792838A12EC8C5 /* Pods */,
+				A93F023E920EDCB9F8F62D06 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -116,9 +143,6 @@
 				5BB686682C3FD44500AC9628 /* AppDelegate.swift */,
 				5BB6866A2C3FD44500AC9628 /* SceneDelegate.swift */,
 				5BB686AD2C47C62000AC9628 /* Views */,
-				5BB686A62C47C49900AC9628 /* Model */,
-				5BB686A72C47C51400AC9628 /* Storage */,
-				5BB686AC2C47C60E00AC9628 /* Extension */,
 				5BB686712C3FD44600AC9628 /* Assets.xcassets */,
 				5BB686732C3FD44600AC9628 /* LaunchScreen.storyboard */,
 				5BB686762C3FD44600AC9628 /* Info.plist */,
@@ -143,40 +167,28 @@
 			path = AlbaWageUITests;
 			sourceTree = "<group>";
 		};
-		5BB686A62C47C49900AC9628 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				5BB686A42C47C19C00AC9628 /* DailyWorkInfo.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		5BB686A72C47C51400AC9628 /* Storage */ = {
-			isa = PBXGroup;
-			children = (
-				5BB686A82C47C52F00AC9628 /* Storage.swift */,
-				5BB686AA2C47C56400AC9628 /* DailyWorkInfoStorage.swift */,
-			);
-			path = Storage;
-			sourceTree = "<group>";
-		};
-		5BB686AC2C47C60E00AC9628 /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				5BB686A02C47A5AC00AC9628 /* UIBarButtonItem+CustomView.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 		5BB686AD2C47C62000AC9628 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5BB6866E2C3FD44500AC9628 /* Main.storyboard */,
-				5BB686982C46753500AC9628 /* CalendarViewController.swift */,
-				5B79F5642C5373210058D27B /* CalendarCell.swift */,
-				5BB6869A2C47A07400AC9628 /* CustomBarItem.swift */,
+				5BB686982C46753500AC9628 /* ViewController.swift */,
+				5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */,
+				5BA6A4392D2BA25100AFA738 /* CalendarCell.swift */,
+				5B2F864E2D2B8FA400F74C1D /* DayCell.swift */,
+				5BA6A4332D2B957200AFA738 /* CalendarDate.swift */,
+				5BA6A4372D2B9E9800AFA738 /* WeekView.swift */,
+				5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		A93F023E920EDCB9F8F62D06 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A1D641E455EB30E4E4D5429B /* Pods_AlbaWage.framework */,
+				78DC2F8805B9166B206AB80E /* Pods_AlbaWage_AlbaWageUITests.framework */,
+				EA65DAC54C631564A9189E62 /* Pods_AlbaWageTests.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -186,9 +198,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BB6868F2C3FD44600AC9628 /* Build configuration list for PBXNativeTarget "AlbaWage" */;
 			buildPhases = (
+				81B5D6C3DC31E1D82B634E48 /* [CP] Check Pods Manifest.lock */,
 				5BB686612C3FD44500AC9628 /* Sources */,
 				5BB686622C3FD44500AC9628 /* Frameworks */,
 				5BB686632C3FD44500AC9628 /* Resources */,
+				28DFD2CFDA59F5598EC5048E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -203,6 +217,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BB686922C3FD44600AC9628 /* Build configuration list for PBXNativeTarget "AlbaWageTests" */;
 			buildPhases = (
+				4604903274BE2EAD01B57B0B /* [CP] Check Pods Manifest.lock */,
 				5BB686772C3FD44600AC9628 /* Sources */,
 				5BB686782C3FD44600AC9628 /* Frameworks */,
 				5BB686792C3FD44600AC9628 /* Resources */,
@@ -221,9 +236,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5BB686952C3FD44600AC9628 /* Build configuration list for PBXNativeTarget "AlbaWageUITests" */;
 			buildPhases = (
+				236B22F32772D05BF3126975 /* [CP] Check Pods Manifest.lock */,
 				5BB686812C3FD44600AC9628 /* Sources */,
 				5BB686822C3FD44600AC9628 /* Frameworks */,
 				5BB686832C3FD44600AC9628 /* Resources */,
+				8626DF578D24AB8A477D7C7B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -243,7 +260,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					5BB686642C3FD44500AC9628 = {
 						CreatedOnToolsVersion = 15.4;
@@ -286,7 +303,6 @@
 			files = (
 				5BB686722C3FD44600AC9628 /* Assets.xcassets in Resources */,
 				5BB686752C3FD44600AC9628 /* Base in Resources */,
-				5BB686702C3FD44500AC9628 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,20 +322,123 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		236B22F32772D05BF3126975 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlbaWage-AlbaWageUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28DFD2CFDA59F5598EC5048E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlbaWage/Pods-AlbaWage-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlbaWage/Pods-AlbaWage-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlbaWage/Pods-AlbaWage-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4604903274BE2EAD01B57B0B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlbaWageTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81B5D6C3DC31E1D82B634E48 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlbaWage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8626DF578D24AB8A477D7C7B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlbaWage-AlbaWageUITests/Pods-AlbaWage-AlbaWageUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlbaWage-AlbaWageUITests/Pods-AlbaWage-AlbaWageUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlbaWage-AlbaWageUITests/Pods-AlbaWage-AlbaWageUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		5BB686612C3FD44500AC9628 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5BB686A52C47C19C00AC9628 /* DailyWorkInfo.swift in Sources */,
-				5BB686A12C47A5AC00AC9628 /* UIBarButtonItem+CustomView.swift in Sources */,
-				5BB686AB2C47C56400AC9628 /* DailyWorkInfoStorage.swift in Sources */,
-				5BB686992C46753500AC9628 /* CalendarViewController.swift in Sources */,
-				5B79F5652C5373210058D27B /* CalendarCell.swift in Sources */,
-				5BB686A92C47C52F00AC9628 /* Storage.swift in Sources */,
-				5BB6869B2C47A07500AC9628 /* CustomBarItem.swift in Sources */,
+				5BA6A4362D2B9D3E00AFA738 /* CalendarView.swift in Sources */,
+				5BA6A43C2D2BA82200AFA738 /* HeaderView.swift in Sources */,
+				5B2F864F2D2B8FA400F74C1D /* DayCell.swift in Sources */,
+				5BB686992C46753500AC9628 /* ViewController.swift in Sources */,
+				5BA6A4382D2B9E9800AFA738 /* WeekView.swift in Sources */,
+				5BA6A4342D2B957200AFA738 /* CalendarDate.swift in Sources */,
 				5BB686692C3FD44500AC9628 /* AppDelegate.swift in Sources */,
 				5BB6866B2C3FD44500AC9628 /* SceneDelegate.swift in Sources */,
+				5BA6A43A2D2BA25100AFA738 /* CalendarCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,15 +475,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5BB6866E2C3FD44500AC9628 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5BB6866F2C3FD44500AC9628 /* Base */,
-				5BB686AF2C47CC9900AC9628 /* ko */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		5BB686732C3FD44600AC9628 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -500,6 +610,7 @@
 		};
 		5BB686902C3FD44600AC9628 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66469D2E5FAD4503122E0262 /* Pods-AlbaWage.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -512,7 +623,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -535,6 +645,7 @@
 		};
 		5BB686912C3FD44600AC9628 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9ACAA4C787C14F9E543A61C5 /* Pods-AlbaWage.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -547,7 +658,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -570,8 +680,8 @@
 		};
 		5BB686932C3FD44600AC9628 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF7E62891ABCC87F9751F102 /* Pods-AlbaWageTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -591,8 +701,8 @@
 		};
 		5BB686942C3FD44600AC9628 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6D6ECC216F48581F3D72EFAA /* Pods-AlbaWageTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -612,8 +722,8 @@
 		};
 		5BB686962C3FD44600AC9628 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF7FBDA93FCFB8E869D2A8ED /* Pods-AlbaWage-AlbaWageUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NCJMGH8Z64;
@@ -632,8 +742,8 @@
 		};
 		5BB686972C3FD44600AC9628 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C10CEC480588A396746E70BF /* Pods-AlbaWage-AlbaWageUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NCJMGH8Z64;

@@ -1,0 +1,6 @@
+framework module Pods_AlbaWageTests {
+  umbrella header "Pods-AlbaWageTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
