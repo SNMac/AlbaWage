@@ -30,8 +30,15 @@ public final class CalendarView: UIView {
         return size
     }
     
+    public var itemWidth: CGFloat = 60 {
+        didSet {
+            calendarCollectionView.reloadData()
+            updateCalendarCollectionView()
+        }
+    }
+    
     // Day Item의 높이 정의
-    public var itemHeight: CGFloat = 40 {
+    public var itemHeight: CGFloat = 80 {
         didSet {
             calendarCollectionView.reloadData()
             updateCalendarCollectionView()
@@ -39,7 +46,7 @@ public final class CalendarView: UIView {
     }
     
     // Day Item 간의 spacing 정의
-    public var itemSpacing: CGFloat = 9 {
+    public var itemSpacing: CGFloat = 0 {
         didSet {
             calendarCollectionView.reloadData()
             updateCalendarCollectionView()
@@ -47,7 +54,7 @@ public final class CalendarView: UIView {
     }
     
     // 요일 간의 spacing 정의
-    public var lineSpacing: CGFloat = 6 {
+    public var lineSpacing: CGFloat = 5 {
         didSet {
             calendarCollectionView.reloadData()
             updateCalendarCollectionView()
@@ -72,11 +79,11 @@ public final class CalendarView: UIView {
     public var selectedDate: Date?
     
     private var calendarSize: CGSize {
-        return CGSize(width: itemHeight * 7 + itemSpacing * 6, height: itemHeight * 6 + lineSpacing * 5)
+        return CGSize(width: itemWidth * 7 + itemSpacing * 6, height: itemHeight * 6 + lineSpacing * 5)
     }
     
     private var weekLabelSpacing: CGFloat {
-        return itemHeight + itemSpacing - 14
+        return itemWidth + itemSpacing - 14
     }
     
     private var dataSource = [[CalendarDate]]() {
@@ -156,7 +163,7 @@ private extension CalendarView {
         
         weekView.snp.makeConstraints {
             $0.top.equalTo(headerView.snp.bottom)
-            $0.leading.equalTo(calendarCollectionView).offset(itemHeight / 2 - 7)
+            $0.leading.equalTo(calendarCollectionView).offset(itemWidth / 2 - 7)
         }
         
         calendarCollectionView.snp.makeConstraints {
@@ -181,7 +188,7 @@ extension CalendarView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configure(dataSource[indexPath.row], itemHeight: itemHeight, itemSpacing: itemSpacing, lineSpacing: lineSpacing)
+        cell.configure(dataSource[indexPath.row], itemWidth: itemWidth, itemHeight: itemHeight, itemSpacing: itemSpacing, lineSpacing: lineSpacing)
         
         if let selectedDate = selectedDate {
             let calendarDate = CalendarDate(date: selectedDate)
