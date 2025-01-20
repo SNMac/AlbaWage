@@ -23,20 +23,20 @@ final class HeaderView: UIView {
     
     var prevButtonDisabled: Bool = false {
         didSet {
-            self.prevMonthButtonView.tintColor = prevButtonDisabled ? .placeholderText : .label
+            self.prevMonthButtonView.configuration?.baseForegroundColor = prevButtonDisabled ? .placeholderText : .label
         }
     }
     
     var nextButtonDisabled: Bool = false {
         didSet {
-            self.nextMonthButtonView.tintColor = nextButtonDisabled ? .placeholderText : .label
+            self.nextMonthButtonView.configuration?.baseForegroundColor = nextButtonDisabled ? .placeholderText : .label
         }
     }
     
     // MARK: - UI Components
     private let monthLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 28)
+        label.font = .systemFont(ofSize: 26)
         label.textColor = .label
         
         return label
@@ -44,7 +44,7 @@ final class HeaderView: UIView {
     
     private let yearLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 16)
         label.textColor = .secondaryLabel
         
         return label
@@ -52,7 +52,22 @@ final class HeaderView: UIView {
     
     let prevMonthButtonView: UIButton = {
         var buttonConfig = UIButton.Configuration.plain()
-        buttonConfig.image = UIImage(systemName: "chevron.left")
+        buttonConfig.image = UIImage(systemName: "chevron.left")?.applyingSymbolConfiguration(.init(pointSize: 16))
+        buttonConfig.buttonSize = .small
+        
+        let button = UIButton(configuration: buttonConfig)
+        return button
+    }()
+    
+    let todayButtonView: UIButton = {
+        var container = AttributeContainer()
+        container.font = .system(size: 14)
+        
+        var buttonConfig = UIButton.Configuration.gray()
+        buttonConfig.attributedTitle = AttributedString("오늘", attributes: container)
+        buttonConfig.baseForegroundColor = .label
+        buttonConfig.cornerStyle = .capsule
+        buttonConfig.buttonSize = .small
         
         let button = UIButton(configuration: buttonConfig)
         return button
@@ -60,7 +75,8 @@ final class HeaderView: UIView {
     
     let nextMonthButtonView: UIButton = {
         var buttonConfig = UIButton.Configuration.plain()
-        buttonConfig.image = UIImage(systemName: "chevron.right")
+        buttonConfig.image = UIImage(systemName: "chevron.right")?.applyingSymbolConfiguration(.init(pointSize: 16))
+        buttonConfig.buttonSize = .small
         
         let button = UIButton(configuration: buttonConfig)
         return button
@@ -91,6 +107,7 @@ private extension HeaderView {
         addSubview(monthLabel)
         addSubview(yearLabel)
         addSubview(prevMonthButtonView)
+        addSubview(todayButtonView)
         addSubview(nextMonthButtonView)
     }
     
@@ -106,6 +123,11 @@ private extension HeaderView {
         }
         
         prevMonthButtonView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+        }
+        
+        todayButtonView.snp.makeConstraints { make in
+            make.leading.equalTo(prevMonthButtonView.snp.trailing)
             make.trailing.equalTo(nextMonthButtonView.snp.leading)
             make.centerY.equalToSuperview()
         }

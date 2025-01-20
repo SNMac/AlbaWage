@@ -220,6 +220,10 @@ private extension CalendarView {
         }
     }
     
+    func scrollToPage(_ page: Int, animated: Bool) {
+        calendarCollectionView.scrollToItem(at: IndexPath(item: page, section: .zero), at: .centeredHorizontally, animated: animated)
+    }
+    
     func setHeaderViewTitle(_ date: CalendarDate) {
         headerView.monthText = "\(date.month)월"
         headerView.yearText = "\(date.year)"
@@ -228,13 +232,21 @@ private extension CalendarView {
     func setHeaderViewButton() {
         headerView.prevMonthButtonView.addAction(UIAction(handler: { _ in
             self.nowPage -= 1
-            self.calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: true)
+            self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
         }), for: .touchUpInside)
+        
+        headerView.todayButtonView.addAction(UIAction(handler: { _ in
+            self.nowPage = self.dataSource.count / 2
+            self.scrollToPage(self.nowPage, animated: true)
+            self.updateHeaderViewTitle()
+            self.updateHeaderViewButton()
+        }), for: .touchUpInside)
+        
         headerView.nextMonthButtonView.addAction(UIAction(handler: { _ in
             self.nowPage += 1
-            self.calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: true)
+            self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
         }), for: .touchUpInside)
