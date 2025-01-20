@@ -11,8 +11,6 @@ import SnapKit
 
 // 특정 달의 달력을 표시하는 Cell
 class CalendarCell: UICollectionViewCell {
-    private var itemWidth: CGFloat = 0
-    private var itemHeight: CGFloat = 0
     private var itemSpacing: CGFloat = 0
     private var lineSpacing: CGFloat = 0
     
@@ -48,9 +46,7 @@ class CalendarCell: UICollectionViewCell {
     }
     
     // MARK: - Configure Method
-    func configure(_ dataSource: [CalendarDate], itemWidth: CGFloat, itemHeight: CGFloat, itemSpacing: CGFloat, lineSpacing: CGFloat) {
-        self.itemWidth = itemWidth
-        self.itemHeight = itemHeight
+    func configure(_ dataSource: [CalendarDate], itemSpacing: CGFloat, lineSpacing: CGFloat) {
         self.itemSpacing = itemSpacing
         self.lineSpacing = lineSpacing
         
@@ -71,7 +67,9 @@ private extension CalendarCell {
     }
     
     func setConstraints() {
-        monthCollectionView.snp.makeConstraints { $0.edges.equalToSuperview() }
+        monthCollectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 
@@ -136,7 +134,7 @@ private extension CalendarCell {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1 / 7), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(itemHeight))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1 / 6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         group.interItemSpacing = .fixed(itemSpacing)
         

@@ -20,16 +20,18 @@ final class DayCell: UICollectionViewCell {
     // MARK: - UI Components
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 15)
+        label.font = .systemFont(ofSize: 12)
         
         return label
     }()
+    
     private let seperator: UIView = {
         let seperator = UIView()
-        seperator.backgroundColor = .lightGray
+        seperator.backgroundColor = .separator
         
         return seperator
     }()
+    
     private let squareView = UIView()
     
     // MARK: - Initializers
@@ -40,13 +42,6 @@ final class DayCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        let seperatorHeight: CGFloat = 1.0
-        seperator.frame = CGRect(x: 0, y: contentView.bounds.height - seperatorHeight, width: contentView.bounds.width, height: seperatorHeight)
     }
     
     // MARK: - Configure
@@ -74,18 +69,24 @@ private extension DayCell {
     
     private func setViewHierarchy() {
         contentView.addSubview(squareView)
-        squareView.addSubview(label)
         squareView.addSubview(seperator)
+        squareView.addSubview(label)
     }
     
     private func setConstraints() {
-        label.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.centerY.equalToSuperview().offset(-20)
-        }
-            
         squareView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+        }
+        
+        seperator.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
+        label.snp.makeConstraints { make in
+            make.top.equalTo(seperator.snp.bottom).offset(2)
+            make.centerX.equalToSuperview()
         }
     }
 }

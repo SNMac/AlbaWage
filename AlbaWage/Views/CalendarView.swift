@@ -16,34 +16,11 @@ public protocol CalendarViewDelegate: AnyObject {
 }
 
 public final class CalendarView: UIView {
-    let log = OSLog(subsystem: "github.com-SNMac.Albawage", category: "CalendarView")
+    let log = OSLog(subsystem: "com.snmac.AlbaWage", category: "CalendarView")
     
     private let disposeBag = DisposeBag()
     
     public weak var delegate: CalendarViewDelegate?
-    
-    public override var intrinsicContentSize: CGSize {
-        var size = calendarSize
-        let stackViewHeight = weekView.frame.height
-        size.height += stackViewHeight + 64
-        
-        return size
-    }
-    
-    public var itemWidth: CGFloat = 60 {
-        didSet {
-            calendarCollectionView.reloadData()
-            updateCalendarCollectionView()
-        }
-    }
-    
-    // Day Item의 높이 정의
-    public var itemHeight: CGFloat = 80 {
-        didSet {
-            calendarCollectionView.reloadData()
-            updateCalendarCollectionView()
-        }
-    }
     
     // Day Item 간의 spacing 정의
     public var itemSpacing: CGFloat = 0 {
@@ -61,30 +38,28 @@ public final class CalendarView: UIView {
         }
     }
     
-    // 달력의 'startDate'를 정의(해당 날짜를 기준으로 이전 날짜들은 disabled됨)
+    // 달력의 시작을 정의
     public var startDate: Date {
         didSet {
             self.dataSource = dataSource(from: startDate, to: endDate)
         }
     }
     
-    // 달력의 'endDate'를 정의(default는 startDate를 기준으로 5년)
+    // 달력의 끝을 정의
     public var endDate: Date {
         didSet {
             self.dataSource = dataSource(from: startDate, to: endDate)
         }
     }
     
+    // 현재 CalendarView의 page
+    public var nowPage: Int = 0
+    
+    // 현재 page의 date
+    public var nowPagingDate: Date
+    
     // 선택된 date
     public var selectedDate: Date?
-    
-    private var calendarSize: CGSize {
-        return CGSize(width: itemWidth * 7 + itemSpacing * 6, height: itemHeight * 6 + lineSpacing * 5)
-    }
-    
-    private var weekLabelSpacing: CGFloat {
-        return itemWidth + itemSpacing - 14
-    }
     
     private var dataSource = [[CalendarDate]]() {
         didSet {
@@ -114,36 +89,43 @@ public final class CalendarView: UIView {
     }()
     
     // MARK: - Initializers
-    public init(startDate: Date, endDate: Date? = nil) {
-        self.startDate = startDate
-        self.endDate = endDate ?? (Calendar.current.date(byAdding: .year, value: 5, to: startDate) ?? startDate)
+    public init(_ nowPagingDate: Date) {
+        self.nowPagingDate = nowPagingDate
+        self.startDate = Calendar.current.date(byAdding: .year, value: -150, to: nowPagingDate) ?? nowPagingDate
+        self.endDate = Calendar.current.date(byAdding: .year, value: 150, to: nowPagingDate) ?? nowPagingDate
         super.init(frame: .zero)
         
         setupUI()
         calendarCollectionView.dataSource = self
         calendarCollectionView.delegate = self
         
-        self.dataSource = dataSource(from: startDate, to: self.endDate)
+        self.dataSource = dataSource(from: self.startDate, to: self.endDate)
+        self.nowPage = self.dataSource.count / 2
     }
     
-    public convenience init(selectedDate: Date, startDate: Date, endDate: Date? = nil) {
-        self.init(startDate: startDate, endDate: endDate)
+    public convenience init(selectedDate: Date, nowPagingDate: Date) {
+        self.init(nowPagingDate)
         self.selectedDate = selectedDate
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override public func layoutSubviews() {
+        super.layoutSubviews()
+        calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: false)
+        updateHeaderViewButton()
+    }
 }
 
 // MARK: - UI Methods
 private extension CalendarView {
     func setupUI() {
-        weekView.spacing = weekLabelSpacing
-        let startDate = CalendarDate(date: startDate)
+        let nowPagingDate = CalendarDate(date: nowPagingDate)
         
-        headerView.text = "\(startDate.year)년 \(startDate.month)월"
-        headerView.leftDisabled = true
+        setHeaderViewTitle(nowPagingDate)
+        setHeaderViewButton()
         
         setViewHierarchy()
         setConstraints()
@@ -156,21 +138,22 @@ private extension CalendarView {
     }
     
     func setConstraints() {
-        headerView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(64)
+        headerView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(64)
         }
         
-        weekView.snp.makeConstraints {
-            $0.top.equalTo(headerView.snp.bottom)
-            $0.leading.equalTo(calendarCollectionView).offset(itemWidth / 2 - 7)
+        weekView.snp.makeConstraints { make in
+            make.top.equalTo(headerView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
         }
         
-        calendarCollectionView.snp.makeConstraints {
-            $0.centerX.bottom.equalToSuperview()
-            $0.size.equalTo(calendarSize)
-            $0.top.equalTo(weekView.snp.bottom).offset(10)
+        calendarCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(weekView.snp.bottom).offset(2)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
+        
         self.isUserInteractionEnabled = true
         calendarCollectionView.isUserInteractionEnabled = true
     }
@@ -188,7 +171,7 @@ extension CalendarView: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        cell.configure(dataSource[indexPath.row], itemWidth: itemWidth, itemHeight: itemHeight, itemSpacing: itemSpacing, lineSpacing: lineSpacing)
+        cell.configure(dataSource[indexPath.row], itemSpacing: itemSpacing, lineSpacing: lineSpacing)
         
         if let selectedDate = selectedDate {
             let calendarDate = CalendarDate(date: selectedDate)
@@ -220,32 +203,58 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
 // MARK: - UIScrollViewDelegate
 extension CalendarView {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let page = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
-        if page == 0 {
-            headerView.leftDisabled = true
-        } else if page == dataSource.count {
-            headerView.rightDisabled = true
-        } else {
-            headerView.leftDisabled = false
-            headerView.rightDisabled = false
-        }
+        nowPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         
-        if let date = dataSource[page].first {
-            setHeaderViewTitle(date)
-        }
+        updateHeaderViewTitle()
+        updateHeaderViewButton()
     }
 }
 
 // MARK: - Private Methods
 private extension CalendarView {
     func updateCalendarCollectionView() {
-        calendarCollectionView.snp.updateConstraints {
-            $0.size.equalTo(calendarSize)
+        calendarCollectionView.snp.updateConstraints { make in
+            make.top.equalTo(weekView.snp.bottom).offset(2)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
         }
     }
     
     func setHeaderViewTitle(_ date: CalendarDate) {
-        headerView.text = "\(date.year)년 \(date.month)월"
+        headerView.monthText = "\(date.month)월"
+        headerView.yearText = "\(date.year)"
+    }
+    
+    func setHeaderViewButton() {
+        headerView.prevMonthButtonView.addAction(UIAction(handler: { _ in
+            self.nowPage -= 1
+            self.calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: true)
+            self.updateHeaderViewTitle()
+            self.updateHeaderViewButton()
+        }), for: .touchUpInside)
+        headerView.nextMonthButtonView.addAction(UIAction(handler: { _ in
+            self.nowPage += 1
+            self.calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: true)
+            self.updateHeaderViewTitle()
+            self.updateHeaderViewButton()
+        }), for: .touchUpInside)
+    }
+    
+    func updateHeaderViewTitle() {
+        if let date = dataSource[nowPage].first {
+            setHeaderViewTitle(date)
+        }
+    }
+    
+    func updateHeaderViewButton() {
+        if nowPage == 0 {
+            headerView.prevButtonDisabled = true
+        } else if nowPage == dataSource.count - 1 {
+            headerView.nextButtonDisabled = true
+        } else {
+            headerView.prevButtonDisabled = false
+            headerView.nextButtonDisabled = false
+        }
     }
     
     func dataSource(from startDate: Date, to endDate: Date) -> [[CalendarDate]] {

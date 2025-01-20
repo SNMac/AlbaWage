@@ -9,58 +9,68 @@ import UIKit
 import SnapKit
 
 final class HeaderView: UIView {
-    var text: String = "" {
+    var monthText: String = "" {
         didSet {
-            label.text = text
+            monthLabel.text = monthText
         }
     }
     
-    var leftDisabled: Bool = false {
+    var yearText: String = "" {
         didSet {
-            self.leftImageView.tintColor = leftDisabled ? .systemGray5 : .systemGray2
+            yearLabel.text = yearText
         }
     }
     
-    var rightDisabled: Bool = false {
+    var prevButtonDisabled: Bool = false {
         didSet {
-            self.rightImageView.tintColor = rightDisabled ? .systemGray5 : .systemGray2
+            self.prevMonthButtonView.tintColor = prevButtonDisabled ? .placeholderText : .label
+        }
+    }
+    
+    var nextButtonDisabled: Bool = false {
+        didSet {
+            self.nextMonthButtonView.tintColor = nextButtonDisabled ? .placeholderText : .label
         }
     }
     
     // MARK: - UI Components
-    private let leftImageView: UIImageView = {
-        let imageView = UIImageView()
-        let image = UIImage(systemName: "chevron.left")
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = image?.withAlignmentRectInsets(UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8))
-        imageView.tintColor = .systemGray5
-        
-        return imageView
-    }()
-    
-    private let rightImageView: UIImageView = {
-        let imageView = UIImageView()
-        let image = UIImage(systemName: "chevron.right")
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = image?.withAlignmentRectInsets(UIEdgeInsets(top: -8, left: -8, bottom: -8, right: -8))
-        imageView.tintColor = .systemGray2
-        
-        return imageView
-    }()
-    
-    private let label: UILabel = {
+    private let monthLabel: UILabel = {
         let label = UILabel()
-        label.font = .boldSystemFont(ofSize: 20)
+        label.font = .systemFont(ofSize: 28)
         label.textColor = .label
-        label.textAlignment = .center
         
         return label
+    }()
+    
+    private let yearLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 20)
+        label.textColor = .secondaryLabel
+        
+        return label
+    }()
+    
+    let prevMonthButtonView: UIButton = {
+        var buttonConfig = UIButton.Configuration.plain()
+        buttonConfig.image = UIImage(systemName: "chevron.left")
+        
+        let button = UIButton(configuration: buttonConfig)
+        return button
+    }()
+    
+    let nextMonthButtonView: UIButton = {
+        var buttonConfig = UIButton.Configuration.plain()
+        buttonConfig.image = UIImage(systemName: "chevron.right")
+        
+        let button = UIButton(configuration: buttonConfig)
+        return button
     }()
     
     // MARK: - Initializers
     init(text: String = "") {
         super.init(frame: .zero)
-        self.text = text
+        self.yearText = text
+        self.monthText = text
         
         setupUI()
     }
@@ -78,25 +88,31 @@ private extension HeaderView {
     }
     
     func setViewHierarchy() {
-        addSubview(leftImageView)
-        addSubview(label)
-        addSubview(rightImageView)
+        addSubview(monthLabel)
+        addSubview(yearLabel)
+        addSubview(prevMonthButtonView)
+        addSubview(nextMonthButtonView)
     }
     
     func setConstraints() {
-        label.snp.makeConstraints {
-            $0.center.equalToSuperview()
-            $0.width.equalTo(116)
+        monthLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(5)
+            make.centerY.equalToSuperview()
         }
         
-        leftImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(label.snp.leading).offset(-6)
+        yearLabel.snp.makeConstraints { make in
+            make.leading.equalTo(monthLabel.snp.trailing).offset(10)
+            make.centerY.equalTo(monthLabel)
         }
         
-        rightImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalTo(label.snp.trailing).offset(6)
+        prevMonthButtonView.snp.makeConstraints { make in
+            make.trailing.equalTo(nextMonthButtonView.snp.leading)
+            make.centerY.equalToSuperview()
+        }
+        
+        nextMonthButtonView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(5)
+            make.centerY.equalToSuperview()
         }
     }
 }

@@ -12,12 +12,11 @@ final class WeekView: UIStackView {
     private let daysOfWeek = ["일", "월", "화", "수", "목", "금", "토"]
     
     // MARK: - Initializers
-    init(spacing: CGFloat = 0) {
+    init() {
         super.init(frame: .zero)
         axis = .horizontal
         alignment = .center
         distribution = .fillEqually
-        self.spacing = spacing
         setupUI()
     }
     
@@ -34,12 +33,6 @@ private extension WeekView {
     
     func setViewHierarchy() {
         daysOfWeek.forEach { addArrangedSubview(label($0)) }
-        
-        self.arrangedSubviews.forEach {
-            $0.snp.makeConstraints {
-                $0.width.equalTo(14)
-            }
-        }
     }
 }
 
@@ -47,9 +40,15 @@ private extension WeekView {
 private extension WeekView {
     func label(_ text: String) -> UILabel {
         let label = UILabel()
-        
         label.text = text
-        label.textColor = .systemGray
+        label.textAlignment = .center
+        if text == "일" {
+            label.textColor = .red
+        } else if text == "토" {
+            label.textColor = .tintColor
+        } else {
+            label.textColor = .label
+        }
         label.font = .systemFont(ofSize: 14)
         
         return label

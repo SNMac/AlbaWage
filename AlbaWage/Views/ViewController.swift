@@ -12,9 +12,9 @@ import OSLog
 // TODO: 알바할때 사용가능한 체크리스트(알바 끝날때마다 체크 초기화되도록 설정)
 
 class ViewController: UIViewController {
-    let log = OSLog(subsystem: "github.com-SNMac.Albawage", category: "ViewController")
+    let log = OSLog(subsystem: "com.snmac.AlbaWage", category: "ViewController")
     
-    let calendarView = CalendarView(startDate: .now)
+    let calendarView = CalendarView(.now)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         self.view.addSubview(calendarView)
         calendarView.delegate = self
         calendarView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.edges.equalTo(self.view.safeAreaLayoutGuide).inset(UIEdgeInsets(top: 0, left: 5, bottom: 100, right: 5))
         }
     }
 }
@@ -30,6 +30,7 @@ class ViewController: UIViewController {
 // MARK: - CalendarViewDelegate
 extension ViewController: CalendarViewDelegate {
     func didSelect(_ date: Date) {
-        os_log("date: %@", log: log, type: .debug, date as CVarArg)
+        let dateLog = "\(date)"
+        os_log("date: %@", log: log, type: .debug, dateLog)
     }
 }
