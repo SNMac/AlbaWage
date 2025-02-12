@@ -70,7 +70,7 @@ public final class CalendarView: UIView {
     private weak var selectedCell: CalendarCell?
     
     // MARK: - UI Components
-    private let headerView = HeaderView()
+    private let headerView = HeaderView(workHour: 110, workMin: 30, wage: 1089530)  // 예시
     private let weekView = WeekView()
     
     private let calendarCollectionView: UICollectionView = {
@@ -84,15 +84,16 @@ public final class CalendarView: UIView {
         collectionView.collectionViewLayout = layout
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         
         return collectionView
     }()
     
     // MARK: - Initializers
-    public init(_ nowPagingDate: Date) {
-        self.nowPagingDate = nowPagingDate
-        self.startDate = Calendar.current.date(byAdding: .year, value: -150, to: nowPagingDate) ?? nowPagingDate
-        self.endDate = Calendar.current.date(byAdding: .year, value: 150, to: nowPagingDate) ?? nowPagingDate
+    public init() {
+        self.startDate = Date(timeIntervalSinceReferenceDate: 0)
+        self.endDate = Calendar.current.date(byAdding: .year, value: 200, to: startDate) ?? .now
+        self.nowPagingDate = .now
         super.init(frame: .zero)
         
         setupUI()
@@ -100,11 +101,13 @@ public final class CalendarView: UIView {
         calendarCollectionView.delegate = self
         
         self.dataSource = dataSource(from: self.startDate, to: self.endDate)
-        self.nowPage = self.dataSource.count / 2
+        
+        let offsetComps = Calendar.current.dateComponents([.month], from: startDate, to: .now)
+        self.nowPage = offsetComps.month ?? 0
     }
     
-    public convenience init(selectedDate: Date, nowPagingDate: Date) {
-        self.init(nowPagingDate)
+    public convenience init(selectedDate: Date) {
+        self.init()
         self.selectedDate = selectedDate
     }
     
@@ -225,31 +228,34 @@ private extension CalendarView {
     }
     
     func setHeaderViewTitle(_ date: CalendarDate) {
-        headerView.monthText = "\(date.month)월"
+        headerView.monthText = "\(date.month)"
         headerView.yearText = "\(date.year)"
     }
     
     func setHeaderViewButton() {
-        headerView.prevMonthButtonView.addAction(UIAction(handler: { _ in
+        let prevMonthButtonAction = UIAction(handler: { _ in
             self.nowPage -= 1
             self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
-        }), for: .touchUpInside)
+        })
         
-        headerView.todayButtonView.addAction(UIAction(handler: { _ in
-            self.nowPage = self.dataSource.count / 2
+        let todayButtonAction = UIAction(handler: { _ in
+            let offsetComps = Calendar.current.dateComponents([.month], from: self.startDate, to: .now)
+            self.nowPage = offsetComps.month ?? 0
             self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
-        }), for: .touchUpInside)
+        })
         
-        headerView.nextMonthButtonView.addAction(UIAction(handler: { _ in
+        let nextMonthButtonAction = UIAction(handler: { _ in
             self.nowPage += 1
             self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
-        }), for: .touchUpInside)
+        })
+        
+        headerView.setButtonAction(prevMonthButtonAction, todayButtonAction, nextMonthButtonAction)
     }
     
     func updateHeaderViewTitle() {
@@ -260,12 +266,12 @@ private extension CalendarView {
     
     func updateHeaderViewButton() {
         if nowPage == 0 {
-            headerView.prevButtonDisabled = true
+            headerView.activePrevMonthButton(false)
         } else if nowPage == dataSource.count - 1 {
-            headerView.nextButtonDisabled = true
+            headerView.activeNextMonthButton(false)
         } else {
-            headerView.prevButtonDisabled = false
-            headerView.nextButtonDisabled = false
+            headerView.activePrevMonthButton(true)
+            headerView.activeNextMonthButton(true)
         }
     }
     

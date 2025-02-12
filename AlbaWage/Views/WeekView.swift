@@ -17,6 +17,7 @@ final class WeekView: UIStackView {
         axis = .horizontal
         alignment = .center
         distribution = .fillEqually
+        
         setupUI()
     }
     

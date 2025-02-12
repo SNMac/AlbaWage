@@ -14,7 +14,7 @@ import OSLog
 class ViewController: UIViewController {
     let log = OSLog(subsystem: "com.snmac.AlbaWage", category: "ViewController")
     
-    let calendarView = CalendarView(.now)
+    let calendarView = CalendarView()
     
     override func viewDidLoad() {
         super.viewDidLoad()

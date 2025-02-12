@@ -22,13 +22,17 @@ struct CalendarDate {
     var day: Int
     var type: DateType
     
+    let dateFormatter = DateFormatter()
+    
     var date: Date {
         let string = "\(year)-\(month)-\(day)"
-        let dateFormatter = DateFormatter()
+        let date = toFormattedDate(string) ?? .now
         
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from: string) ?? .now
-        return date
+        let timeZone = TimeZone.autoupdatingCurrent
+        let secondsFromGMT = timeZone.secondsFromGMT(for: date)
+        let localizedDate = date.addingTimeInterval(TimeInterval(secondsFromGMT))
+        
+        return localizedDate
     }
 }
 
@@ -119,4 +123,13 @@ extension CalendarDate: Comparable {
     static func == (lhs: CalendarDate, rhs: CalendarDate) -> Bool {
         return lhs.year == rhs.year && lhs.month == rhs.month && lhs.day == rhs.day
     }
+}
+
+extension CalendarDate {
+    func toFormattedDate(_ date: String) -> Date? {
+        let dateFormatter = DateFormatter.getDateFormatter()
+//        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        return dateFormatter.date(from: date)
+      }
 }

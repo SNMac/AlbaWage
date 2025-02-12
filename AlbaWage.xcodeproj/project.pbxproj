@@ -7,8 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B1856DA2D3F73E400895400 /* WageInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1856D92D3F73E400895400 /* WageInfoView.swift */; };
+		5B1856E12D3F7D8A00895400 /* MoveMonthButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1856E02D3F7D8A00895400 /* MoveMonthButtonView.swift */; };
+		5B1856E72D3FA1A600895400 /* AlbaInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1856E62D3FA1A600895400 /* AlbaInfo.swift */; };
 		5B26166C2D3E1EB700772508 /* ViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B26166B2D3E1EB700772508 /* ViewController+Extension.swift */; };
 		5B2F864F2D2B8FA400F74C1D /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F864E2D2B8FA400F74C1D /* DayCell.swift */; };
+		5B2FEC212D53458C00786973 /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B2FEC202D53458C00786973 /* DateFormatter+Extension.swift */; };
 		5BA6A4342D2B957200AFA738 /* CalendarDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4332D2B957200AFA738 /* CalendarDate.swift */; };
 		5BA6A4362D2B9D3E00AFA738 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */; };
 		5BA6A4382D2B9E9800AFA738 /* WeekView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA6A4372D2B9E9800AFA738 /* WeekView.swift */; };
@@ -45,8 +49,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B1856D92D3F73E400895400 /* WageInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WageInfoView.swift; sourceTree = "<group>"; };
+		5B1856E02D3F7D8A00895400 /* MoveMonthButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoveMonthButtonView.swift; sourceTree = "<group>"; };
+		5B1856E62D3FA1A600895400 /* AlbaInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbaInfo.swift; sourceTree = "<group>"; };
 		5B26166B2D3E1EB700772508 /* ViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Extension.swift"; sourceTree = "<group>"; };
 		5B2F864E2D2B8FA400F74C1D /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		5B2FEC202D53458C00786973 /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		5BA6A4332D2B957200AFA738 /* CalendarDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDate.swift; sourceTree = "<group>"; };
 		5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		5BA6A4372D2B9E9800AFA738 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
@@ -117,12 +125,31 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		5B26166D2D3E1EC900772508 /* Extension */ = {
+		5B1856DD2D3F7D1A00895400 /* HeaderView */ = {
+			isa = PBXGroup;
+			children = (
+				5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */,
+				5B1856D92D3F73E400895400 /* WageInfoView.swift */,
+				5B1856E02D3F7D8A00895400 /* MoveMonthButtonView.swift */,
+			);
+			path = HeaderView;
+			sourceTree = "<group>";
+		};
+		5B1856E82D3FA1AB00895400 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5B1856E62D3FA1A600895400 /* AlbaInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5B26166D2D3E1EC900772508 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				5B26166B2D3E1EB700772508 /* ViewController+Extension.swift */,
+				5B2FEC202D53458C00786973 /* DateFormatter+Extension.swift */,
 			);
-			path = Extension;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5BB6865C2C3FD44500AC9628 = {
@@ -153,7 +180,7 @@
 				5BB686682C3FD44500AC9628 /* AppDelegate.swift */,
 				5BB6866A2C3FD44500AC9628 /* SceneDelegate.swift */,
 				5BB686AD2C47C62000AC9628 /* Views */,
-				5B26166D2D3E1EC900772508 /* Extension */,
+				5B26166D2D3E1EC900772508 /* Extensions */,
 				5BB686712C3FD44600AC9628 /* Assets.xcassets */,
 				5BB686732C3FD44600AC9628 /* LaunchScreen.storyboard */,
 				5BB686762C3FD44600AC9628 /* Info.plist */,
@@ -183,11 +210,12 @@
 			children = (
 				5BB686982C46753500AC9628 /* ViewController.swift */,
 				5BA6A4352D2B9D3E00AFA738 /* CalendarView.swift */,
-				5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */,
+				5B1856DD2D3F7D1A00895400 /* HeaderView */,
 				5BA6A4372D2B9E9800AFA738 /* WeekView.swift */,
 				5BA6A4392D2BA25100AFA738 /* CalendarCell.swift */,
 				5B2F864E2D2B8FA400F74C1D /* DayCell.swift */,
 				5BA6A4332D2B957200AFA738 /* CalendarDate.swift */,
+				5B1856E82D3FA1AB00895400 /* Model */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -443,14 +471,18 @@
 			files = (
 				5BA6A4362D2B9D3E00AFA738 /* CalendarView.swift in Sources */,
 				5BA6A43C2D2BA82200AFA738 /* HeaderView.swift in Sources */,
+				5B1856E72D3FA1A600895400 /* AlbaInfo.swift in Sources */,
 				5B2F864F2D2B8FA400F74C1D /* DayCell.swift in Sources */,
 				5BB686992C46753500AC9628 /* ViewController.swift in Sources */,
 				5BA6A4382D2B9E9800AFA738 /* WeekView.swift in Sources */,
 				5BA6A4342D2B957200AFA738 /* CalendarDate.swift in Sources */,
 				5BB686692C3FD44500AC9628 /* AppDelegate.swift in Sources */,
 				5BB6866B2C3FD44500AC9628 /* SceneDelegate.swift in Sources */,
+				5B1856E12D3F7D8A00895400 /* MoveMonthButtonView.swift in Sources */,
+				5B2FEC212D53458C00786973 /* DateFormatter+Extension.swift in Sources */,
 				5B26166C2D3E1EB700772508 /* ViewController+Extension.swift in Sources */,
 				5BA6A43A2D2BA25100AFA738 /* CalendarCell.swift in Sources */,
+				5B1856DA2D3F73E400895400 /* WageInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
