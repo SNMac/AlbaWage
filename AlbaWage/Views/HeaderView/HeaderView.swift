@@ -75,8 +75,8 @@ private extension HeaderView {
     func setViewHierarchy() {
         addSubview(monthLabel)
         addSubview(yearLabel)
-        addSubview(moveMonthButtonView)
         addSubview(wageInfoView)
+        addSubview(moveMonthButtonView)
     }
     
     func setConstraints() {

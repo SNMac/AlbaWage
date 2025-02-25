@@ -24,15 +24,8 @@ final class DayCell: UICollectionViewCell {
         
         return label
     }()
-    
-    private let seperator: UIView = {
-        let seperator = UIView()
-        seperator.backgroundColor = .separator
-        
-        return seperator
-    }()
-    
-    private let squareView = UIView()
+
+    private let cellView = UIView()
     
     // MARK: - Initializers
     override init(frame: CGRect) {
@@ -52,7 +45,7 @@ final class DayCell: UICollectionViewCell {
         switch type {
         case .default:
             self.isUserInteractionEnabled = true
-        case .disabled, .startDate:
+        case .disabled:
             self.isUserInteractionEnabled = false
         }
         
@@ -68,24 +61,17 @@ private extension DayCell {
     }
     
     private func setViewHierarchy() {
-        contentView.addSubview(squareView)
-        squareView.addSubview(seperator)
-        squareView.addSubview(label)
+        contentView.addSubview(cellView)
+        cellView.addSubview(label)
     }
     
     private func setConstraints() {
-        squareView.snp.makeConstraints { make in
+        cellView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
         
-        seperator.snp.makeConstraints { make in
-            make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(1)
-        }
-        
         label.snp.makeConstraints { make in
-            make.top.equalTo(seperator.snp.bottom).offset(2)
+            make.top.equalToSuperview().inset(1)
             make.centerX.equalToSuperview()
         }
     }
@@ -93,29 +79,24 @@ private extension DayCell {
 
 private extension DayCell {
     func setupUI(for type: DateType, isSelected: Bool) {
-        label.textColor = textColor(for: type, isSelected: isSelected)
+        label.textColor = textColor(for: type)
+        cellView.layer.borderWidth = 0.5
+        cellView.layer.borderColor = UIColor.separator.withAlphaComponent(0.1).cgColor
+//        cellView.layer.borderColor = UIColor.black.cgColor
+        cellView.layer.backgroundColor = backgroundColor(isSelected: isSelected).cgColor
     }
     
-    func textColor(for type: DateType, isSelected: Bool) -> UIColor {
+    func textColor(for type: DateType) -> UIColor {
         switch type {
         case .default:
-            return isSelected ? .secondaryLabel : .label
+            return .label
         case .disabled:
             return .placeholderText
-        case .startDate:
-            return .label
         }
     }
     
-    func backgroundColor(for type: DateType, isSelected: Bool) -> UIColor {
-        switch type {
-        case .default:
-            return isSelected ? .secondarySystemBackground : .systemBackground
-        case .disabled:
-            return .systemBackground
-        case .startDate:
-            return .secondarySystemBackground
-        }
+    func backgroundColor(isSelected: Bool) -> UIColor {
+        return isSelected ? .tintColor.withAlphaComponent(0.1) : .clear
     }
 }
 

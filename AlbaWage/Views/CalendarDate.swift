@@ -8,15 +8,14 @@
 import Foundation
 
 enum DateType {
-    // 시작 날짜
-    case startDate
     // 선택 가능한 날짜
     case `default`
     // 선택 불가능한 날짜
     case disabled
 }
 
-struct CalendarDate {
+struct CalendarDate: Hashable {
+    let id = UUID()
     var year: Int
     var month: Int
     var day: Int

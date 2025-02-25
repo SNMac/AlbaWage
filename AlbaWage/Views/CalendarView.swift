@@ -39,24 +39,13 @@ public final class CalendarView: UIView {
     }
     
     // 달력의 시작을 정의
-    public var startDate: Date {
-        didSet {
-            self.dataSource = dataSource(from: startDate, to: endDate)
-        }
-    }
+    public var beginDate: Date
     
     // 달력의 끝을 정의
-    public var endDate: Date {
-        didSet {
-            self.dataSource = dataSource(from: startDate, to: endDate)
-        }
-    }
+    public var endDate: Date
     
     // 현재 CalendarView의 page
     public var nowPage: Int = 0
-    
-    // 현재 page의 date
-    public var nowPagingDate: Date
     
     // 선택된 date
     public var selectedDate: Date?
@@ -67,7 +56,7 @@ public final class CalendarView: UIView {
         }
     }
     
-    private weak var selectedCell: CalendarCell?
+    private weak var selectedCell: MonthCell?
     
     // MARK: - UI Components
     private let headerView = HeaderView(workHour: 110, workMin: 30, wage: 1089530)  // 예시
@@ -76,12 +65,9 @@ public final class CalendarView: UIView {
     private let calendarCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.register(CalendarCell.self, forCellWithReuseIdentifier: "CalendarCell")
-        collectionView.collectionViewLayout = layout
+        collectionView.register(MonthCell.self, forCellWithReuseIdentifier: "MonthCell")
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
@@ -91,18 +77,14 @@ public final class CalendarView: UIView {
     
     // MARK: - Initializers
     public init() {
-        self.startDate = Date(timeIntervalSinceReferenceDate: 0)
-        self.endDate = Calendar.current.date(byAdding: .year, value: 200, to: startDate) ?? .now
-        self.nowPagingDate = .now
+        self.beginDate = Date(timeIntervalSinceReferenceDate: 0)
+        self.endDate = Calendar.current.date(byAdding: .year, value: 200, to: beginDate) ?? .now
         super.init(frame: .zero)
         
         setupUI()
-        calendarCollectionView.dataSource = self
-        calendarCollectionView.delegate = self
+        configureDataSource()
         
-        self.dataSource = dataSource(from: self.startDate, to: self.endDate)
-        
-        let offsetComps = Calendar.current.dateComponents([.month], from: startDate, to: .now)
+        let offsetComps = Calendar.current.dateComponents([.month], from: beginDate, to: .now)
         self.nowPage = offsetComps.month ?? 0
     }
     
@@ -125,9 +107,9 @@ public final class CalendarView: UIView {
 // MARK: - UI Methods
 private extension CalendarView {
     func setupUI() {
-        let nowPagingDate = CalendarDate(date: nowPagingDate)
+        let today = CalendarDate(date: .now)
         
-        setHeaderViewTitle(nowPagingDate)
+        setHeaderViewTitle(today)
         setHeaderViewButton()
         
         setViewHierarchy()
@@ -135,6 +117,8 @@ private extension CalendarView {
     }
     
     func setViewHierarchy() {
+        calendarCollectionView.dataSource = self
+        calendarCollectionView.delegate = self
         self.addSubview(headerView)
         self.addSubview(weekView)
         self.addSubview(calendarCollectionView)
@@ -152,9 +136,8 @@ private extension CalendarView {
         }
         
         calendarCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(weekView.snp.bottom).offset(2)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+            make.top.equalTo(weekView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
         
         self.isUserInteractionEnabled = true
@@ -170,13 +153,13 @@ extension CalendarView: UICollectionViewDataSource {
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CalendarCell", for: indexPath) as? CalendarCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MonthCell", for: indexPath) as? MonthCell else {
             return UICollectionViewCell()
         }
         
-        cell.configure(dataSource[indexPath.row], itemSpacing: itemSpacing, lineSpacing: lineSpacing)
+        cell.configure(dataSource[indexPath.row], itemSpacing: self.itemSpacing, lineSpacing: self.lineSpacing)
         
-        if let selectedDate = selectedDate {
+        if let selectedDate = self.selectedDate {
             let calendarDate = CalendarDate(date: selectedDate)
             cell.selectedDate = calendarDate
         }
@@ -201,12 +184,20 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
     }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
+    
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return .zero
+    }
 }
 
 // MARK: - UIScrollViewDelegate
 extension CalendarView {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        nowPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        self.nowPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
         
         updateHeaderViewTitle()
         updateHeaderViewButton()
@@ -215,12 +206,65 @@ extension CalendarView {
 
 // MARK: - Private Methods
 private extension CalendarView {
-    func updateCalendarCollectionView() {
-        calendarCollectionView.snp.updateConstraints { make in
-            make.top.equalTo(weekView.snp.bottom).offset(2)
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
+    func configureDataSource() {
+        var dataSource = [[CalendarDate]]()
+        
+        let calendarBeginDate = CalendarDate(date: self.beginDate)
+        let calendarEndDate = CalendarDate(date: self.endDate)
+        
+        var currCalendarDate = calendarBeginDate
+        currCalendarDate.day = 1
+        var lastMonthCalendarDate = calendarBeginDate.previousMonth()
+        
+        while currCalendarDate.compareYearAndMonth(with: calendarEndDate) {
+            var daysOfMonth = [CalendarDate]()
+            
+            let firstDayOfWeek = currCalendarDate.startDayOfWeek()
+            let totalDays = currCalendarDate.daysOfMonth()
+            let lastMonthTotalDays = lastMonthCalendarDate.daysOfMonth()
+            
+            // 첫 주의 빈 공간을 이전 달로 채움
+            for count in (0..<firstDayOfWeek) {
+                var calendarDate = currCalendarDate
+                calendarDate.day = lastMonthTotalDays - firstDayOfWeek + count + 1
+                calendarDate.type = .disabled
+                
+                daysOfMonth.append(calendarDate)
+            }
+            
+            // 이번 달을 채움
+            var iterCalendarDate = currCalendarDate
+            iterCalendarDate.day = 1
+            for _ in (0..<totalDays) {
+                if iterCalendarDate < calendarBeginDate {
+                    iterCalendarDate.type = .disabled
+                } else if iterCalendarDate >= calendarEndDate {
+                    iterCalendarDate.type = .disabled
+                } else {
+                    iterCalendarDate.type = .default
+                }
+                
+                daysOfMonth.append(iterCalendarDate)
+                
+                iterCalendarDate = iterCalendarDate.nextDay()
+            }
+            
+            lastMonthCalendarDate = currCalendarDate
+            currCalendarDate = currCalendarDate.nextMonth()
+            currCalendarDate.day = 1
+            
+            // 마지막 주 빈 공간을 다음 달로 채움
+            iterCalendarDate = currCalendarDate
+            iterCalendarDate.type = .disabled
+            while daysOfMonth.count < 42 {
+                daysOfMonth.append(iterCalendarDate)
+                iterCalendarDate = iterCalendarDate.nextDay()
+            }
+            
+            dataSource.append(daysOfMonth)
         }
+        
+        self.dataSource = dataSource
     }
     
     func scrollToPage(_ page: Int, animated: Bool) {
@@ -241,7 +285,7 @@ private extension CalendarView {
         })
         
         let todayButtonAction = UIAction(handler: { _ in
-            let offsetComps = Calendar.current.dateComponents([.month], from: self.startDate, to: .now)
+            let offsetComps = Calendar.current.dateComponents([.month], from: self.beginDate, to: .now)
             self.nowPage = offsetComps.month ?? 0
             self.scrollToPage(self.nowPage, animated: true)
             self.updateHeaderViewTitle()
@@ -256,6 +300,13 @@ private extension CalendarView {
         })
         
         headerView.setButtonAction(prevMonthButtonAction, todayButtonAction, nextMonthButtonAction)
+    }
+    
+    func updateCalendarCollectionView() {
+        calendarCollectionView.snp.updateConstraints { make in
+            make.top.equalTo(weekView.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     func updateHeaderViewTitle() {
@@ -273,68 +324,5 @@ private extension CalendarView {
             headerView.activePrevMonthButton(true)
             headerView.activeNextMonthButton(true)
         }
-    }
-    
-    func dataSource(from startDate: Date, to endDate: Date) -> [[CalendarDate]] {
-        var dataSource = [[CalendarDate]]()
-        
-        let startCalendarDate = CalendarDate(date: startDate)
-        let endCalendarDate = CalendarDate(date: endDate)
-        
-        var currentCalendarDate = startCalendarDate
-        currentCalendarDate.day = 1
-        var lastMonthCalendarDate = startCalendarDate.previousMonth()
-        
-        while currentCalendarDate.compareYearAndMonth(with: endCalendarDate) {
-            var daysOfMonth = [CalendarDate]()
-            
-            let firstDayOfWeek = currentCalendarDate.startDayOfWeek()
-            let totalDays = currentCalendarDate.daysOfMonth()
-            let lastMonthTotalDays = lastMonthCalendarDate.daysOfMonth()
-            
-            // 첫 주의 빈 공간을 이전 달로 채움
-            for count in (0..<firstDayOfWeek) {
-                var calendarDate = currentCalendarDate
-                calendarDate.day = lastMonthTotalDays - firstDayOfWeek + count + 1
-                calendarDate.type = .disabled
-                
-                daysOfMonth.append(calendarDate)
-            }
-            
-            // 이번 달을 채움
-            var calendarDate = currentCalendarDate
-            calendarDate.day = 1
-            for _ in (0..<totalDays) {
-                if calendarDate < startCalendarDate {
-                    calendarDate.type = .disabled
-                } else if calendarDate == startCalendarDate {
-                    calendarDate.type = .startDate
-                } else if calendarDate >= endCalendarDate {
-                    calendarDate.type = .disabled
-                } else {
-                    calendarDate.type = .default
-                }
-                
-                daysOfMonth.append(calendarDate)
-                
-                calendarDate = calendarDate.nextDay()
-            }
-            
-            lastMonthCalendarDate = currentCalendarDate
-            currentCalendarDate = currentCalendarDate.nextMonth()
-            currentCalendarDate.day = 1
-            
-            // 마지막 주 빈 공간을 다음 달로 채움
-            calendarDate = currentCalendarDate
-            calendarDate.type = .disabled
-            while daysOfMonth.count < 42 {
-                daysOfMonth.append(calendarDate)
-                calendarDate = calendarDate.nextDay()
-            }
-            
-            dataSource.append(daysOfMonth)
-        }
-        
-        return dataSource
     }
 }
