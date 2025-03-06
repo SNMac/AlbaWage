@@ -60,6 +60,7 @@
 		5BA6A4372D2B9E9800AFA738 /* WeekView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekView.swift; sourceTree = "<group>"; };
 		5BA6A4392D2BA25100AFA738 /* MonthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCell.swift; sourceTree = "<group>"; };
 		5BA6A43B2D2BA82200AFA738 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		5BAA82632D7977BF0099C41D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		5BB686652C3FD44500AC9628 /* AlbaWage.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlbaWage.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB686682C3FD44500AC9628 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5BB6866A2C3FD44500AC9628 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -155,6 +156,7 @@
 		5BB6865C2C3FD44500AC9628 = {
 			isa = PBXGroup;
 			children = (
+				5BAA82632D7977BF0099C41D /* .gitignore */,
 				5BB686672C3FD44500AC9628 /* AlbaWage */,
 				5BB6867E2C3FD44600AC9628 /* AlbaWageTests */,
 				5BB686882C3FD44600AC9628 /* AlbaWageUITests */,

@@ -11,16 +11,29 @@ import SnapKit
 final class DayCell: UICollectionViewCell {
     private var type: DateType = .default
     
+    var isToday: Bool = false {
+        didSet {
+            setupUI(for: type, isSelected: isSelected, isToday: isToday)
+        }
+    }
+    
     override var isSelected: Bool {
         didSet {
-            self.setupUI(for: type, isSelected: isSelected)
+            setupUI(for: type, isSelected: isSelected, isToday: isToday)
         }
     }
     
     // MARK: - UI Components
+    private let seperator: UIView = {
+        let seperator = UILabel()
+        seperator.backgroundColor = .separator
+        
+        return seperator
+    }()
+    
     private let label: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 12)
+        label.font = .systemFont(ofSize: 12, weight: .semibold)
         
         return label
     }()
@@ -42,14 +55,15 @@ final class DayCell: UICollectionViewCell {
         self.label.text = day
         self.type = type
         
-        switch type {
-        case .default:
-            self.isUserInteractionEnabled = true
-        case .disabled:
-            self.isUserInteractionEnabled = false
-        }
+//        switch type {
+//        case .default:
+//            self.isUserInteractionEnabled = true
+//        case .disabled:
+//            self.isUserInteractionEnabled = false
+//        }
+        self.isUserInteractionEnabled = true
         
-        setupUI(for: type, isSelected: isSelected)
+        setupUI(for: type, isSelected: isSelected, isToday: isToday)
     }
 }
 
@@ -62,6 +76,7 @@ private extension DayCell {
     
     private func setViewHierarchy() {
         contentView.addSubview(cellView)
+        cellView.addSubview(seperator)
         cellView.addSubview(label)
     }
     
@@ -70,20 +85,39 @@ private extension DayCell {
             make.edges.equalToSuperview()
         }
         
+        seperator.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalTo(1)
+        }
+        
         label.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(1)
+            make.top.equalToSuperview().inset(2)
             make.centerX.equalToSuperview()
+            make.width.height.equalTo(18)
         }
     }
 }
 
 private extension DayCell {
-    func setupUI(for type: DateType, isSelected: Bool) {
-        label.textColor = textColor(for: type)
-        cellView.layer.borderWidth = 0.5
-        cellView.layer.borderColor = UIColor.separator.withAlphaComponent(0.1).cgColor
-//        cellView.layer.borderColor = UIColor.black.cgColor
-        cellView.layer.backgroundColor = backgroundColor(isSelected: isSelected).cgColor
+    func setupUI(for type: DateType, isSelected: Bool, isToday: Bool) {
+        if isToday {
+            label.textColor = .systemBackground
+            label.backgroundColor = .label
+            cellView.layer.backgroundColor = UIColor.systemGray5.cgColor
+        } else {
+            label.textColor = textColor(for: type)
+            label.backgroundColor = .clear
+            cellView.layer.backgroundColor = UIColor.clear.cgColor
+        }
+        
+        label.textAlignment = .center
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = label.bounds.width / 2.0
+        
+        cellView.layer.cornerRadius = 5
+        cellView.layer.borderWidth = 1
+        cellView.layer.borderColor = borderColor(isSelected: isSelected).cgColor
     }
     
     func textColor(for type: DateType) -> UIColor {
@@ -95,8 +129,8 @@ private extension DayCell {
         }
     }
     
-    func backgroundColor(isSelected: Bool) -> UIColor {
-        return isSelected ? .tintColor.withAlphaComponent(0.1) : .clear
+    func borderColor(isSelected: Bool) -> UIColor {
+        return isSelected ? .tintColor : .clear
     }
 }
 

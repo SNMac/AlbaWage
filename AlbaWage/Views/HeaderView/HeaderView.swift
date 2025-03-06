@@ -24,7 +24,7 @@ final class HeaderView: UIView {
     // MARK: - UI Components
     private let monthLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 26)
+        label.font = .monospacedDigitSystemFont(ofSize: 26, weight: .regular)
         label.textColor = .label
         
         return label
@@ -32,7 +32,7 @@ final class HeaderView: UIView {
     
     private let yearLabel: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 16)
+        label.font = .monospacedDigitSystemFont(ofSize: 16, weight: .regular)
         label.textColor = .secondaryLabel
         
         return label

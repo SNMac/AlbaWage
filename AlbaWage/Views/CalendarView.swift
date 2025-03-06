@@ -31,7 +31,7 @@ public final class CalendarView: UIView {
     }
     
     // 요일 간의 spacing 정의
-    public var lineSpacing: CGFloat = 5 {
+    public var lineSpacing: CGFloat = 0 {
         didSet {
             calendarCollectionView.reloadData()
             updateCalendarCollectionView()
@@ -45,18 +45,35 @@ public final class CalendarView: UIView {
     public var endDate: Date
     
     // 현재 CalendarView의 page
-    public var nowPage: Int = 0
+    public var currPage: Int = 0 {
+        didSet {
+            currYear = 2001 + currPage / 12
+            currMonth = 1 + currPage % 12
+        }
+    }
+    
+    public var currYear: Int = 2025 {
+        didSet {
+            updateHeaderViewTitle()
+        }
+    }
+    public var currMonth: Int = 1 {
+        didSet {
+            updateHeaderViewTitle()
+        }
+    }
     
     // 선택된 date
     public var selectedDate: Date?
+    
+    // 선택된 cell
+    private weak var selectedCell: MonthCell?
     
     private var dataSource = [[CalendarDate]]() {
         didSet {
             calendarCollectionView.reloadData()
         }
     }
-    
-    private weak var selectedCell: MonthCell?
     
     // MARK: - UI Components
     private let headerView = HeaderView(workHour: 110, workMin: 30, wage: 1089530)  // 예시
@@ -80,12 +97,11 @@ public final class CalendarView: UIView {
         self.beginDate = Date(timeIntervalSinceReferenceDate: 0)
         self.endDate = Calendar.current.date(byAdding: .year, value: 200, to: beginDate) ?? .now
         super.init(frame: .zero)
+        let offsetComps = Calendar.current.dateComponents([.month], from: beginDate, to: .now)
+        self.currPage = offsetComps.month ?? 0
         
         setupUI()
         configureDataSource()
-        
-        let offsetComps = Calendar.current.dateComponents([.month], from: beginDate, to: .now)
-        self.nowPage = offsetComps.month ?? 0
     }
     
     public convenience init(selectedDate: Date) {
@@ -99,7 +115,7 @@ public final class CalendarView: UIView {
     
     override public func layoutSubviews() {
         super.layoutSubviews()
-        calendarCollectionView.scrollToItem(at: IndexPath(item: self.nowPage, section: .zero), at: .centeredHorizontally, animated: false)
+        calendarCollectionView.scrollToItem(at: IndexPath(item: self.currPage, section: .zero), at: .centeredHorizontally, animated: false)
         updateHeaderViewButton()
     }
 }
@@ -107,9 +123,7 @@ public final class CalendarView: UIView {
 // MARK: - UI Methods
 private extension CalendarView {
     func setupUI() {
-        let today = CalendarDate(date: .now)
-        
-        setHeaderViewTitle(today)
+        setHeaderViewTitle()
         setHeaderViewButton()
         
         setViewHierarchy()
@@ -197,7 +211,8 @@ extension CalendarView: UICollectionViewDelegateFlowLayout {
 // MARK: - UIScrollViewDelegate
 extension CalendarView {
     public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.nowPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        self.currPage = Int(scrollView.contentOffset.x / scrollView.frame.size.width)
+        print(currPage)
         
         updateHeaderViewTitle()
         updateHeaderViewButton()
@@ -225,11 +240,11 @@ private extension CalendarView {
             
             // 첫 주의 빈 공간을 이전 달로 채움
             for count in (0..<firstDayOfWeek) {
-                var calendarDate = currCalendarDate
-                calendarDate.day = lastMonthTotalDays - firstDayOfWeek + count + 1
-                calendarDate.type = .disabled
+                var prevCalendarDate = currCalendarDate.previousMonth()
+                prevCalendarDate.day = lastMonthTotalDays - firstDayOfWeek + count + 1
+                prevCalendarDate.type = .disabled
                 
-                daysOfMonth.append(calendarDate)
+                daysOfMonth.append(prevCalendarDate)
             }
             
             // 이번 달을 채움
@@ -271,30 +286,30 @@ private extension CalendarView {
         calendarCollectionView.scrollToItem(at: IndexPath(item: page, section: .zero), at: .centeredHorizontally, animated: animated)
     }
     
-    func setHeaderViewTitle(_ date: CalendarDate) {
-        headerView.monthText = "\(date.month)"
-        headerView.yearText = "\(date.year)"
+    func setHeaderViewTitle() {
+        headerView.monthText = "\(currMonth)"
+        headerView.yearText = "\(currYear)"
     }
     
     func setHeaderViewButton() {
         let prevMonthButtonAction = UIAction(handler: { _ in
-            self.nowPage -= 1
-            self.scrollToPage(self.nowPage, animated: true)
+            self.currPage -= 1
+            self.scrollToPage(self.currPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
         })
         
         let todayButtonAction = UIAction(handler: { _ in
             let offsetComps = Calendar.current.dateComponents([.month], from: self.beginDate, to: .now)
-            self.nowPage = offsetComps.month ?? 0
-            self.scrollToPage(self.nowPage, animated: true)
+            self.currPage = offsetComps.month ?? 0
+            self.scrollToPage(self.currPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
         })
         
         let nextMonthButtonAction = UIAction(handler: { _ in
-            self.nowPage += 1
-            self.scrollToPage(self.nowPage, animated: true)
+            self.currPage += 1
+            self.scrollToPage(self.currPage, animated: true)
             self.updateHeaderViewTitle()
             self.updateHeaderViewButton()
         })
@@ -310,15 +325,14 @@ private extension CalendarView {
     }
     
     func updateHeaderViewTitle() {
-        if let date = dataSource[nowPage].first {
-            setHeaderViewTitle(date)
-        }
+        headerView.monthText = "\(currMonth)"
+        headerView.yearText = "\(currYear)"
     }
     
     func updateHeaderViewButton() {
-        if nowPage == 0 {
+        if currPage == 0 {
             headerView.activePrevMonthButton(false)
-        } else if nowPage == dataSource.count - 1 {
+        } else if currPage == dataSource.count - 1 {
             headerView.activeNextMonthButton(false)
         } else {
             headerView.activePrevMonthButton(true)

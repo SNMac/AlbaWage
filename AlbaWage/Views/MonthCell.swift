@@ -20,6 +20,7 @@ class MonthCell: UICollectionViewCell {
         }
     }
     
+    // 선택된 date
     var selectedDate: CalendarDate?
     var selectedDateRelay = PublishRelay<CalendarDate>()
     
@@ -84,10 +85,9 @@ extension MonthCell: UICollectionViewDataSource {
         let calendarDate = dataSource[indexPath.row]
 
         cell.configure("\(calendarDate.day)", type: calendarDate.type)
-
+        
         if calendarDate == CalendarDate(date: .now) {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
-            cell.isSelected = true
+            cell.isToday = true
         }
 
         if calendarDate == selectedDate {
@@ -101,16 +101,19 @@ extension MonthCell: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension MonthCell: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedDateRelay.accept(dataSource[indexPath.row])
-    }
-    
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard let cell = collectionView.cellForItem(at: indexPath) else {
             return false
         }
-        
+        print("shouldSelectItemAt")
+        print(dataSource[indexPath.row])
         return !cell.isSelected
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedDateRelay.accept(dataSource[indexPath.row])
+        print("didSelectItemAt")
+        print(dataSource[indexPath.row])
     }
 }
 

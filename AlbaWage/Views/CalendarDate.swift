@@ -14,8 +14,7 @@ enum DateType {
     case disabled
 }
 
-struct CalendarDate: Hashable {
-    let id = UUID()
+struct CalendarDate {
     var year: Int
     var month: Int
     var day: Int

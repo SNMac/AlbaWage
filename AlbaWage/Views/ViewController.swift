@@ -22,7 +22,8 @@ class ViewController: UIViewController {
         self.view.addSubview(calendarView)
         calendarView.delegate = self
         calendarView.snp.makeConstraints { make in
-            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview().inset(5)
         }
     }
 }
